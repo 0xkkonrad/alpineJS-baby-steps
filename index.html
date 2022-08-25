@@ -1,0 +1,117 @@
+<!-- boilerplate html -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Alpine JS examples</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine.js" defer></script>
+
+    <script src="https://cdn.tailwindcss.com/"></script>
+
+    <!-- x-cloak -->
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="text-center mx-auto mt-6" x-data="{
+            open: false,
+            name: 'nothing',
+            animals: [
+            { species: 'dog',
+            sound: 'woof'
+            },
+            { species: 'cat',
+            sound: 'meow'
+            },
+            { species: 'bird',
+            sound: 'tweet'
+            },
+            { species: 'fish',
+            sound: 'blub'
+            }
+            ]    
+        }">
+
+        <button class="text-center hover:bg-slate-700 text-white font-bold py-2 px-4 rounded" @click="open=!open"
+            :class="open ? 'bg-blue-500 hover:bg-blue-300' : 'bg-slate-500'">
+            Toggle Me
+        </button>
+
+        <div>
+            <div class="text-left w-1/2 mx-auto m-6 p-3 bg-gray-200 p-10 m-10" x-show="open" x-transition x-cloak>
+                <pre>
+                     /\_____/\
+                    /  o   o  \
+                   ( ==  ^  == )
+                    )         (
+                   (           )
+                  ( (  )   (  ) )
+                 (__(__)___(__)__)
+                  t h i c c c a t  
+                </pre>
+            </div>
+
+            <input type="text" class="w-1/4 mx-auto m-6 p-3 bg-gray-200 p-2 m-10" placeholder="Write something..."
+                x-model="name">
+
+            <p> You've written <span class="underline" x-text="name"></span>. Try writing "Egg"</p>
+
+            <template  class="text-left" x-if="name == 'Egg'">
+                <div x-ref="egg" class="text-left w-1/2 mx-auto m-6 p-3 bg-gray-200 p-10 m-10"
+                @click="{$refs.egg.innerText = 'You broke the egg!',console.log('click!')}">
+                    <pre>
+                      .-"-.
+                    .'     '.
+                   /         \
+                  :           ;
+                  |           |
+                  :           :
+                   \         /
+                    `.     .'
+                lol   `~~~`
+                    </pre>
+                </div>
+            </template>
+
+
+            <script>
+                function animalMaker(length) {
+                    var result = '';
+                    var characters = 'abcdefghijklmnopqrstuvwxyz';
+                    var charactersLength = characters.length;
+                    for (var i = 0; i < length; i++) {
+                        result += characters.charAt(Math.floor(Math.random() *
+                            charactersLength));
+                    }
+                    return result;
+                };
+
+
+            </script>
+
+            <div class="text-left w-1/2 mx-auto m-6 p-3 bg-gray-200 p-10 m-10">
+                <template x-for="animal in animals">
+
+
+                    <li>
+                        The <span x-text="animal.species"></span> goes <span x-text="animal.sound"></span>.
+                    </li>
+
+                </template>
+
+                <button @click="animals.push({species: animalMaker(3), sound: animalMaker(5) })"
+                    class="text-center bg-slate-700 text-white font-bold py-2 px-4 rounded"> See undiscovered species </button>
+            </div>
+
+        </div>
+    </div>
+</body>
