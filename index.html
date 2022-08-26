@@ -18,13 +18,26 @@
         }
     </style>
 
+    <style>
+        #snakeboard {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+        }
+    </style>
+
+    <script>
+        const BrokeEgg = 'You broke the egg!';
+
+    </script>
+
 </head>
 
 <body>
 
     <div class="text-center mx-auto mt-6" x-data="{
             open: false,
-            name: 'nothing',
+            name: 'snek',
             animals: [
             { species: 'dog',
             sound: 'woof'
@@ -65,9 +78,9 @@
 
             <p> You've written <span class="underline" x-text="name"></span>. Try writing "Egg"</p>
 
-            <template  class="text-left" x-if="name == 'Egg'">
+            <div class="text-left" x-show="name == 'Egg'">
                 <div x-ref="egg" class="text-left w-1/2 mx-auto m-6 p-3 bg-gray-200 p-10 m-10"
-                @click="{$refs.egg.innerText = 'You broke the egg!',console.log('click!')}">
+                    @click="{$refs.egg.innerText = BrokeEgg , console.log('click!')}">
                     <pre>
                       .-"-.
                     .'     '.
@@ -80,7 +93,7 @@
                 lol   `~~~`
                     </pre>
                 </div>
-            </template>
+            </div>
 
 
             <script>
@@ -109,9 +122,23 @@
                 </template>
 
                 <button @click="animals.push({species: animalMaker(3), sound: animalMaker(5) })"
-                    class="text-center bg-slate-700 text-white font-bold py-2 px-4 rounded"> See undiscovered species </button>
+                    class="text-center bg-slate-700 text-white font-bold py-2 px-4 rounded"> See undiscovered species
+                </button>
             </div>
+
+            <div class="text-left" x-show="name == 'snek'">
+                <div x-ref="snek" class="text-left w-1/2 mx-auto m-6 p-3 bg-gray-200 p-10 m-10">
+
+                    <div id="score" class="text-3xl">0</div>
+                    <canvas @click="{console.log('clicked snek'),main()}" id="snakeboard" width="400" height="400"></canvas>
+
+                </div>
+            </div>
+
 
         </div>
     </div>
+
+    <script src="snake.js"></script>
+
 </body>
